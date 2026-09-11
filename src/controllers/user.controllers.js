@@ -156,8 +156,8 @@ const logoutUser = asyncHandler(async(req, res) => {
    await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1 //this removes the filed from document
             }
         },
         {
@@ -332,6 +332,8 @@ const updateUserCoverImage = asyncHandler(async(req, res) =>
 
 const getUserChannelProfile = asyncHandler(async(req, res) => {
     const {username} = req.params
+    console.log("username:", username);
+    
 
     if (!username?.trim()) {
         throw new ApiError(400, "username is missing")
@@ -346,7 +348,7 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
         {
             $lookup: {
                 from: "subcriptions",
-                localField: _id,
+                localField: "_id",
                 foreignField: "channel",
                 as: "subscribers"
             }
@@ -354,7 +356,7 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
         {
             $lookup: {
                 from: "subcriptions",
-                localField: _id,
+                localField: "_id",
                 foreignField: "subscriber",
                 as: "subscribedTo"
             }
@@ -417,7 +419,7 @@ const getWatchHistory = asyncHandler(async(req, res) => {
                 as: "watchHistory",
                 pipeline: [
                     {
-                        lookup: {
+                        $lookup: {
                             from: "users",
                             localField: "owner",
                             foreignField: "_id",
