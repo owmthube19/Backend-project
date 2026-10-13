@@ -1,4 +1,4 @@
-A backend project inspired by Hitesh Choudhary's Chai aur Backend series, built using Node.js, Express.js, MongoDB, and Mongoose.
+A backend project built using Node.js, Express.js, MongoDB, and Mongoose.
 
 The project implements core backend functionalities of a video-sharing platform, including user authentication, video management, comments, channel subscriptions, and watch history.
 
